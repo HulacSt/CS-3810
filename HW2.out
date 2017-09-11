@@ -1,0 +1,174 @@
+postgres=# --Steven Hulac
+postgres=# --CS 3810
+postgres=# --Fall 2017
+postgres=# --Homework #1
+postgres=#
+postgres=# --2. (&3.) Designing the table
+postgres=# DROP TABLE Countries; --Just because I'm running this over and over
+DROP TABLE
+postgres=# CREATE TABLE Countries (
+postgres(# country_name VARCHAR(20),
+postgres(# latitude float,
+postgres(# longitude float,
+postgres(# area INT,
+postgres(# population INT PRIMARY KEY,
+postgres(# gdp float,
+postgres(# gdpYear INT
+postgres(# );
+CREATE TABLE
+postgres=#
+postgres=#
+postgres=# --4a. Creating the borders table
+postgres=# DROP TABLE Borders;
+DROP TABLE
+postgres=# CREATE TABLE Borders (
+postgres(#   country VARCHAR(20),
+postgres(#   border VARCHAR(20)
+postgres(# );
+CREATE TABLE
+postgres=#
+postgres=# INSERT INTO Borders VALUES ('Germany', 'Austria');
+INSERT 0 1
+postgres=# INSERT INTO Borders VALUES ('Germany', 'Belgium');
+INSERT 0 1
+postgres=# INSERT INTO Borders VALUES ('Germany', 'Czechia');
+INSERT 0 1
+postgres=# --INSERT INTO Borders VALUES ('Germany', 'Denmark');
+postgres=# INSERT INTO Borders VALUES ('Germany', 'France');
+INSERT 0 1
+postgres=# INSERT INTO Borders VALUES ('Germany', 'Luxembourg');
+INSERT 0 1
+postgres=# INSERT INTO Borders VALUES ('Germany', 'Netherlands');
+INSERT 0 1
+postgres=# INSERT INTO Borders VALUES ('Germany', 'Poland');
+INSERT 0 1
+postgres=# INSERT INTO Borders VALUES ('Germany', 'Switzerland');
+INSERT 0 1
+postgres=# INSERT INTO Borders VALUES ('Netherlands', 'Belgium');
+INSERT 0 1
+postgres=# INSERT INTO Borders VALUES ('Netherlands', 'Germany');
+INSERT 0 1
+postgres=# INSERT INTO Borders VALUES ('Belgium', 'France');
+INSERT 0 1
+postgres=# INSERT INTO Borders VALUES ('Belgium', 'Germany');
+INSERT 0 1
+postgres=# INSERT INTO Borders VALUES ('Belgium', 'Luxembourg');
+INSERT 0 1
+postgres=# INSERT INTO Borders VALUES ('Belgium', 'Netherlands');
+INSERT 0 1
+postgres=# INSERT INTO Borders VALUES ('Luxembourg', 'Belgium');
+INSERT 0 1
+postgres=# INSERT INTO Borders VALUES ('Luxembourg', 'France');
+INSERT 0 1
+postgres=# INSERT INTO Borders VALUES ('Luxembourg', 'Germany');
+INSERT 0 1
+postgres=# --INSERT INTO Borders VALUES ('Poland', 'Belarus');
+postgres=# INSERT INTO Borders VALUES ('Poland', 'Czechia');
+INSERT 0 1
+postgres=# INSERT INTO Borders VALUES ('Poland', 'Germany');
+INSERT 0 1
+postgres=# --INSERT INTO Borders VALUES ('Poland', 'Lithuania');
+postgres=# --INSERT INTO Borders VALUES ('Poland', 'Russia');
+postgres=# --INSERT INTO Borders VALUES ('Poland', 'Slovakia');
+postgres=# --INSERT INTO Borders VALUES ('Poland', 'Ukraine');
+postgres=# INSERT INTO Borders VALUES ('Czechia', 'Austria');
+INSERT 0 1
+postgres=# INSERT INTO Borders VALUES ('Czechia', 'Germany');
+INSERT 0 1
+postgres=# INSERT INTO Borders VALUES ('Czechia', 'Poland');
+INSERT 0 1
+postgres=# --INSERT INTO Borders VALUES ('Czechia', 'Slovakia');
+postgres=# INSERT INTO Borders VALUES ('Austria', 'Czechia');
+INSERT 0 1
+postgres=# INSERT INTO Borders VALUES ('Austria', 'Germany');
+INSERT 0 1
+postgres=# INSERT INTO Borders VALUES ('Austria', 'Switzerland');
+INSERT 0 1
+postgres=# --INSERT INTO Borders VALUES ('Austria', 'Hungary');
+postgres=# --INSERT INTO Borders VALUES ('Austria', 'Italy');
+postgres=# --INSERT INTO Borders VALUES ('Austria', 'Lichtenstein');
+postgres=# --INSERT INTO Borders VALUES ('Austria', 'Slovakia');
+postgres=# --INSERT INTO Borders VALUES ('Austria', 'Slovenia');
+postgres=# --INSERT INTO Borders VALUES ('France', 'Andorra');
+postgres=# INSERT INTO Borders VALUES ('France', 'Belgium');
+INSERT 0 1
+postgres=# INSERT INTO Borders VALUES ('France', 'Germany');
+INSERT 0 1
+postgres=# --INSERT INTO Borders VALUES ('France', 'Italy');
+postgres=# INSERT INTO Borders VALUES ('France', 'Luxembourg');
+INSERT 0 1
+postgres=# --INSERT INTO Borders VALUES ('France', 'Monaco');
+postgres=# --INSERT INTO Borders VALUES ('France', 'Spain');
+postgres=# INSERT INTO Borders VALUES ('France', 'Switzerland');
+INSERT 0 1
+postgres=# INSERT INTO Borders VALUES ('Switzerland', 'Austria');
+INSERT 0 1
+postgres=# INSERT INTO Borders VALUES ('Switzerland', 'France');
+INSERT 0 1
+postgres=# INSERT INTO Borders VALUES ('Switzerland', 'Germany');
+INSERT 0 1
+postgres=# --INSERT INTO Borders VALUES ('Switzerland', 'Italy');
+postgres=# --INSERT INTO Borders VALUES ('Switzerland', 'Lichtenstein');
+postgres=#
+postgres=# --4b Entering the data for the countries
+postgres=# INSERT INTO Countries VALUES ('Germany',  '51', '9', '357022', '80594017', '3979', '2016');
+INSERT 0 1
+postgres=# INSERT INTO Countries VALUES ('Netherlands', '52.3', '5.45', '41543', '17084719', '870.8', '2016');
+INSERT 0 1
+postgres=# INSERT INTO Countries VALUES ('Belgium', '50.5', '4', '30528', '11491346', '508.6', '2016');
+INSERT 0 1
+postgres=# INSERT INTO Countries VALUES ('Luxembourg', '49.45', '6.1', '2586', '594130', '58.74', '2016');
+INSERT 0 1
+postgres=# INSERT INTO Countries VALUES ('Poland', '52', '20', '312685', '38476269', '1052', '2016');
+INSERT 0 1
+postgres=# INSERT INTO Countries VALUES ('Czechia', '49.45', '15.3', '78867', '10674723', '350.9', '2016');
+INSERT 0 1
+postgres=# INSERT INTO Countries VALUES ('Austria', '47.2', '13.2', '83871', '8754413', '416.6', '2016');
+INSERT 0 1
+postgres=# INSERT INTO Countries VALUES ('France', '46', '2', '643801', '67106161', '2699', '2016');
+INSERT 0 1
+postgres=# INSERT INTO Countries VALUES ('Switzerland', '47', '8', '41277', '8236303', '496.3', '2016');
+INSERT 0 1
+postgres=#
+postgres=# SELECT *
+postgres-# INTO table2
+postgres-# FROM Countries INNER JOIN Borders
+postgres-# ON Countries.country_name = Borders.country;
+SELECT 32
+postgres=#
+postgres=# --4c These are the countries which border Germany
+postgres=# SELECT * FROM Borders
+postgres-# WHERE country = 'Germany';
+ country |   border
+---------+-------------
+ Germany | Austria
+ Germany | Belgium
+ Germany | Czechia
+ Germany | France
+ Germany | Luxembourg
+ Germany | Netherlands
+ Germany | Poland
+ Germany | Switzerland
+(8 rows)
+
+postgres=#
+postgres=# --4d These are the countries with population greather than 35 million
+postgres=# SELECT * FROM Countries
+postgres-# WHERE population > 35000000;
+ country_name | latitude | longitude |  area  | population | gdp  | gdpyear
+--------------+----------+-----------+--------+------------+------+---------
+ Germany      |       51 |         9 | 357022 |   80594017 | 3979 |    2016
+ Poland       |       52 |        20 | 312685 |   38476269 | 1052 |    2016
+ France       |       46 |         2 | 643801 |   67106161 | 2699 |    2016
+(3 rows)
+
+postgres=#
+postgres=# --4e These are the countries that satisfy both of the above criteria.
+postgres=# SELECT * FROM table2
+postgres-# WHERE population > 35000000
+postgres-# AND border = 'Germany';
+ country_name | latitude | longitude |  area  | population | gdp  | gdpyear | country | border
+--------------+----------+-----------+--------+------------+------+---------+---------+---------
+ Poland       |       52 |        20 | 312685 |   38476269 | 1052 |    2016 | Poland  | Germany
+ France       |       46 |         2 | 643801 |   67106161 | 2699 |    2016 | France  | Germany
+(2 rows)
